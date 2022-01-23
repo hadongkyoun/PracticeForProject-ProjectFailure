@@ -1,0 +1,32 @@
+{
+  "name": "project_1",
+  "version": "1.0.0",
+  "description": "change picture by text website",
+  "main": "restServer.js",
+  "scripts": {
+    "test": "echo \"noError\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hadongkyoun/Project1.git"
+  },
+  "keywords": [
+    "python"
+  ],
+  "author": "\"3fool\"",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hadongkyoun/Project1/issues"
+  },
+  "homepage": "https://github.com/hadongkyoun/Project1#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2"
+  }
+}
