@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -6,9 +8,11 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 dotenv.config();
-const indexRouter = require('./routes');
-const userRouter = require('./routes/user');
+/*const indexRouter = require('./routes');
+const userRouter = require('./routes/user');*/
 const app = express();
+
+//기본 주소
 app.set('port', process.env.PORT || 3000);
 
 app.use(morgan('dev'));
@@ -28,12 +32,14 @@ app.use(session({
 }));
 //미들웨어
 
-app.use('/', indexRouter);
-app.use('/user', userRouter);
+/*app.use('/', indexRouter);
+app.use('/user', userRouter);*/
 
 const multer = require('multer');
 const fs = require('fs');
+const { response } = require('express');
 
+//작업을 위한 upload 폴더 찾기 및 생성
 try{
   fs.readdirSync('uploads');
 }
@@ -48,30 +54,36 @@ const upload = multer({
       done(null, 'uploads/');
     },
     filename(req, file, done){
-      const ext = path.extname(file.originalname);
-      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      //이름 설정
+      const ext = path.extname("UserImage.jpg");
+      done(null, path.basename("UserImage.jpg", ext) + ext);
     },
   }),
   limits: {fileSize: 5 * 1024 * 1024},
 });
-app.get('/upload', (req, res)=>{
+
+// 기본 실행
+app.get('/', (req, res)=>{
   res.sendFile(path.join(__dirname, 'multipart.html'));
 });
 
-app.post('/upload', upload.single('image'), (req,res)=>{
+//프론트에서 이미지 요청 (app.get으로 주로 처리)
+app.get('/uploads/UserImage.jpg', (req,res)=>{
+  fs.readFile('./uploads/UserImage.jpg', (err,data)=>{
+    console.log('picture loading...');
+    res.writeHead(200);
+    res.write(data);
+    res.end();
+  });
+});
+
+//multipart.html 에서 action 실행시 실행
+app.post('/', upload.single('image'), (req,res)=>{
   console.log(req.file, req.body);
-  res.end('ok');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 
-app.get('/', (req,res, next)=>{
-  //res.send('Hello, Express');
-  console.log('GET / 요청에서만 실행됩니다.');
-  next();
-  //res.sendFile(path.join(__dirname, '/index.html'));
-}, (req, res)=>{
-  throw new Error('에러는 에러 처리 미들웨어로 갑니다');
-});
 
 app.use((req, res, next)=>{
   res.status(404).send('Not Found');
