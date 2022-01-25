@@ -6,8 +6,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 
 dotenv.config();
-//HTML로 응답하려고 한다.
-//const path = require('path');
+const indexRouter = require('./routes');
+const userRouter = require('./routes/user');
 const app = express();
 app.set('port', process.env.PORT || 3000);
 
@@ -27,6 +27,9 @@ app.use(session({
   name: 'session-cookie',
 }));
 //미들웨어
+
+app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 const multer = require('multer');
 const fs = require('fs');
@@ -52,7 +55,7 @@ const upload = multer({
   limits: {fileSize: 5 * 1024 * 1024},
 });
 app.get('/upload', (req, res)=>{
-  res.sendFile(path.join(__dirname, 'multipart. html'));
+  res.sendFile(path.join(__dirname, 'multipart.html'));
 });
 
 app.post('/upload', upload.single('image'), (req,res)=>{
@@ -68,6 +71,10 @@ app.get('/', (req,res, next)=>{
   //res.sendFile(path.join(__dirname, '/index.html'));
 }, (req, res)=>{
   throw new Error('에러는 에러 처리 미들웨어로 갑니다');
+});
+
+app.use((req, res, next)=>{
+  res.status(404).send('Not Found');
 });
 
 app.use((err, req, res, next)=>{
