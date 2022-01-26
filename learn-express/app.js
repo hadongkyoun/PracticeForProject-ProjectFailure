@@ -37,6 +37,7 @@ app.use('/user', userRouter);*/
 
 const multer = require('multer');
 const fs = require('fs');
+
 const { response } = require('express');
 
 //작업을 위한 upload 폴더 찾기 및 생성
@@ -55,8 +56,8 @@ const upload = multer({
     },
     filename(req, file, done){
       //이름 설정
-      const ext = path.extname("UserImage.jpg");
-      done(null, path.basename("UserImage.jpg", ext) + ext);
+      const ext = path.extname("UserImage.PNG");
+      done(null, path.basename("UserImage.PNG", ext) + ext);
     },
   }),
   limits: {fileSize: 5 * 1024 * 1024},
@@ -68,8 +69,8 @@ app.get('/', (req, res)=>{
 });
 
 //프론트에서 이미지 요청 (app.get으로 주로 처리)
-app.get('/uploads/UserImage.jpg', (req,res)=>{
-  fs.readFile('./uploads/UserImage.jpg', (err,data)=>{
+app.get('/uploads/UserImage.PNG', (req,res)=>{
+  fs.readFile('./uploads/UserImage.PNG', (err,data)=>{
     console.log('picture loading...');
     res.writeHead(200);
     res.write(data);
