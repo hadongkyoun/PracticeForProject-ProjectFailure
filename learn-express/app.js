@@ -64,10 +64,11 @@ const upload = multer({
 });
 */
 
-app.use('/script', express.static(__dirname + "/js"));
+app.use(express.static('public'));
+
 // 기본 실행
 app.get('/', (req, res)=>{
-  fs.readFile('gwansang.html', (error,data)=>{
+  fs.readFile('./public/gwansang.html', (error,data)=>{
     if(error){
       console.log(error);
     }
