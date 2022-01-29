@@ -40,7 +40,7 @@ const fs = require('fs');
 
 const { response } = require('express');
 
-//작업을 위한 upload 폴더 찾기 및 생성
+/*작업을 위한 upload 폴더 찾기 및 생성
 try{
   fs.readdirSync('uploads');
 }
@@ -62,13 +62,23 @@ const upload = multer({
   }),
   limits: {fileSize: 5 * 1024 * 1024},
 });
+*/
 
+app.use('/script', express.static(__dirname + "/js"));
 // 기본 실행
 app.get('/', (req, res)=>{
-  res.sendFile(path.join(__dirname, 'multipart.html'));
+  fs.readFile('gwansang.html', (error,data)=>{
+    if(error){
+      console.log(error);
+    }
+    else{
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(data);
+    }
+  })
 });
 
-//프론트에서 이미지 요청 (app.get으로 주로 처리)
+/*프론트에서 이미지 요청 (app.get으로 주로 처리)
 app.get('/uploads/UserImage.PNG', (req,res)=>{
   fs.readFile('./uploads/UserImage.PNG', (err,data)=>{
     console.log('picture loading...');
@@ -83,7 +93,7 @@ app.post('/', upload.single('image'), (req,res)=>{
   console.log(req.file, req.body);
   res.sendFile(path.join(__dirname, 'index.html'));
 });
-
+*/
 
 
 app.use((req, res, next)=>{
