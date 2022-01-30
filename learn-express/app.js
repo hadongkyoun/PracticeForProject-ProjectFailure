@@ -67,16 +67,11 @@ const upload = multer({
 app.use(express.static('public'));
 
 // 기본 실행
-app.get('/', (req, res)=>{
-  fs.readFile('./public/gwansang.html', (error,data)=>{
-    if(error){
-      console.log(error);
-    }
-    else{
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      res.end(data);
-    }
-  })
+app.get('/', (req, res, next)=>{
+ console.log('정상 실행');
+ res.sendFile(path.join(__dirname, './public/gwansang.html'));
+}, (req, res)=>{
+  throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
 });
 
 /*프론트에서 이미지 요청 (app.get으로 주로 처리)
@@ -95,11 +90,6 @@ app.post('/', upload.single('image'), (req,res)=>{
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 */
-
-
-app.use((req, res, next)=>{
-  res.status(404).send('Not Found');
-});
 
 app.use((err, req, res, next)=>{
   console.error(err);
