@@ -1,15 +1,29 @@
 body {
   font-family: sans-serif;
-  background-color: #eeeeee;
+  background-color: rgb(245, 243, 243);
+}
+.gwansang {
+  padding-top: 1%;
+}
+
+.title {
+  margin-top: 60px;
 }
 
 .file-upload {
-  background-color: #000000;
-  width: 600px;
+  background-color: black;
+  width: 50%;
+
   margin: 0 auto;
-  padding: 0px;
+  border-radius: 10px;
+  padding: 4%;
+  padding-bottom: 7%;
 }
 
+.file-upload-subtitle {
+  text-align: right;
+  color: gray;
+}
 
 .file-upload-content {
   display: none;
@@ -18,30 +32,39 @@ body {
 
 .file-upload-input {
   position: absolute;
+  width: 38%;
+  height: 320px;
   margin: 0;
   padding: 0;
-  width: 50%;
-  height: 50%;
   outline: none;
   opacity: 0;
   cursor: pointer;
 }
 
 .image-upload-wrap {
-  margin-top: 1px;
-  border: 2px dashed rgba(0, 0, 0, 0.671);
+  margin-top: 20px;
+  margin: 0 auto;
+  width: 38%;
+  height: 320px;
+
   position: relative;
-  transition:all.10s ease;
+  transition: all.10s ease;
+  border-radius: 10px;
+  background-color: white;
 }
 
 .image-dropping,
 .image-upload-wrap:hover {
-  background-color: rgba(211, 203, 203, 0.185);
-  border: 2px dashed rgba(0, 0, 0, 0.671);
+  background-color: rgba(250, 248, 248, 0.76);
+}
+
+.darg-text-subtitle {
+  margin: 0 auto;
+  padding-top: 4px;
 }
 
 .image-title-wrap {
-  
+  padding: 0 15px 15px 15px;
   color: #222;
 }
 
@@ -52,27 +75,27 @@ body {
 .drag-text h3 {
   font-weight: 100;
   text-transform: uppercase;
-  color:white;
+  color: black;
   padding: 70px 0;
 }
 
 .file-upload-image {
-  max-height: 100%;
-  max-width: 100%;
+  max-height: 320px;
+  max-width: 240px;
   margin: auto;
-  padding: 10px;
+  padding: 20px;
 }
 
 .remove-image {
   width: 200px;
-  margin: 20px;
-  color: black;
+  margin: 0;
+  color: #fff;
   background: #cd4535;
   border: none;
   padding: 10px;
   border-radius: 4px;
   border-bottom: 4px solid #b02818;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   outline: none;
   text-transform: uppercase;
   font-weight: 700;
@@ -81,11 +104,28 @@ body {
 .remove-image:hover {
   background: #c13b2a;
   color: #ffffff;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .remove-image:active {
   border: 0;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
+}
+
+/* 화면을 줄이거나 늘렸을 때 글자크기 이거 왜 안됨? */
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .html {
+    font-size: 8px;
+  }
+}
+
+/* nav폰트 */
+@font-face {
+  font-family: "OTWelcomeRA";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
