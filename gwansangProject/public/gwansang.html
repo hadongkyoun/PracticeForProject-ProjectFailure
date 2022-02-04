@@ -81,8 +81,8 @@
         function readURL(input) {
           if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
+              
               $('.image-upload-wrap').hide();
 
               $('.file-upload-image').attr('src', e.target.result);
@@ -90,32 +90,17 @@
 
               $('.image-title').html(input.files[0].name);
             };
-
             reader.readAsDataURL(input.files[0]);
-          } else {
-            removeUpload();
           }
         }
-
-        function removeUpload() {
-          $('.file-upload-input').replaceWith($('.file-upload-input').clone());
-          $('.file-upload-content').hide();
-          $('.image-upload-wrap').show();
-        }
-        $('.image-upload-wrap').bind('dragover', function () {
-          $('.image-upload-wrap').addClass('image-dropping');
-        });
-        $('.image-upload-wrap').bind('dragleave', function () {
-          $('.image-upload-wrap').removeClass('image-dropping');
-        });
       </script>
 
       <div class="file-upload">
         <h5 class="file-upload-subtitle">subtitle</h5>
 
-        <form action="http://localhost/form.php">
+        <form action="/upload" method="post" enctype="multipart/form-data">
           <div class="image-upload-wrap">
-            <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" />
+            <input class="file-upload-input" type="file" onchange="readURL(this);" name = "image"/>
             <div class="drag-text">
               <br><br /><br><br /><br><br />
               <h6 class="darg-text-subtitle">사진을 드래그 하거나
@@ -123,12 +108,11 @@
             </div>
           </div>
           <div class="file-upload-content">
-            <img class="file-upload-image" src="#" alt="your image" />
+            <img class="file-upload-image" name = "image" />
+            <button type="submit" >변환하기</button>
             <div class="image-title-wrap">
         </form>
-        <button type="button" onclick="removeUpload()" class="remove-image">
-          다른 사진으로 재시도<span class="image-title"></span>
-        </button>
+        
       </div>
     </div>
     </div>

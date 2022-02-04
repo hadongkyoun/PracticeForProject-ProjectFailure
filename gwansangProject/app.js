@@ -6,6 +6,33 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
+const multer = require('multer');
+const fs = require('fs');
+const { response } = require('express');
+
+
+
+try{
+  fs.readdirSync('public/uploads');
+}catch(error){
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('public/uploads');
+}
+//파일저장 위치
+//const upload = multer({dest: 'public/images/'}) //dest : 저장 위치
+const upload = multer ({
+  storage: multer.diskStorage({
+    destination(req, file, done){
+      done(null, 'public/uploads/');
+    },
+    filename(req, file, done){
+      const ext = path.extname(file.originalname);
+      done(null, path.basename(file.originalname), ext);
+    },
+  }),
+  limits: {fileSize: 5 * 1024 * 1024},
+});
+
 
 dotenv.config();
 /*const indexRouter = require('./routes');
@@ -35,14 +62,8 @@ app.use(session({
 /*app.use('/', indexRouter);
 app.use('/user', userRouter);*/
 
-const multer = require('multer');
-const fs = require('fs');
-
-const { response } = require('express');
-
 
 app.use(express.static('public'));
-
 // 기본 실행
 app.get('/', (req, res, next)=>{
  console.log('정상 실행');
@@ -50,6 +71,28 @@ app.get('/', (req, res, next)=>{
 }, (req, res)=>{
   throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
 });
+
+//name이 image로 된 이미지를 받아서 해당 경로에 저장
+app.post('/upload', upload.single('image'), (req,res,next)=>{
+
+  //여기서 이미지 변환 후 저장
+  /*이미지를 다시 보여주기
+    post 기능??? 
+  */
+  res.send('OK');
+}, (req, res)=>{
+  throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
+});
+
+
+ 
+app.get('/upload',(req,res,next) => {
+  res.send('ㅗㅗ');
+}, (req, res)=>{
+  throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
+
+});
+
 
 /*프론트에서 이미지 요청 (app.get으로 주로 처리)
 app.get('/uploads/UserImage.PNG', (req,res)=>{
