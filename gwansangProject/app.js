@@ -65,32 +65,18 @@ app.use('/user', userRouter);*/
 
 app.use(express.static('public'));
 // 기본 실행
-app.get('/', (req, res, next)=>{
+app.get('/', (req, res)=>{
  console.log('정상 실행');
  res.sendFile(path.join(__dirname, './public/gwansang.html'));
-}, (req, res)=>{
-  throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
 });
 
 //name이 image로 된 이미지를 받아서 해당 경로에 저장
-app.post('/upload', upload.single('image'), (req,res,next)=>{
-
+app.post('/upload', upload.single('image'), (req,res)=>{
   //여기서 이미지 변환 후 저장
   /*이미지를 다시 보여주기
     post 기능??? 
   */
-  res.send('OK');
-}, (req, res)=>{
-  throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
-});
-
-
- 
-app.get('/upload',(req,res,next) => {
-  res.send('ㅗㅗ');
-}, (req, res)=>{
-  throw new Error('에러 발생. 에러 처리 미들웨어로 이동');
-
+    res.sendFile(path.join(__dirname, './public/uploads/' + req.file.originalname));
 });
 
 
